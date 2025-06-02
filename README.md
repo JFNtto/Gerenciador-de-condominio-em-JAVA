@@ -69,4 +69,4 @@ Os diagramas de classe e de entidade-relacionamento estão localizados na pasta 
 ## 🤝 Contribuição
 
 Projeto feito em conjunto do meu amigo Gleisson para a aula de POO3 
-Link do github dele: `https://github.com/GleissonValentim`
+Link do github dele:[GleissonValentim](https://github.com/GleissonValentim)
