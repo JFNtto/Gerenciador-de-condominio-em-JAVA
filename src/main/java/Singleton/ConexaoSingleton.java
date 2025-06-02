@@ -13,7 +13,7 @@ public class ConexaoSingleton {
     public static Connection FazerConexao(){
         if (conexao == null){
             try{
-                conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/condominio", "root", "12345678");
+                conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/condominio", "seu_usuario", "sua_senha");
             }catch(SQLException e){
                 System.out.println("Erro na conexão: " + e.getMessage());
             }
