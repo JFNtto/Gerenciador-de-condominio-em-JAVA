@@ -1,0 +1,80 @@
+create database condominio;
+use condominio;
+
+CREATE TABLE morador (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    rg VARCHAR(10) UNIQUE,
+    cpf VARCHAR(10) UNIQUE,
+    moraNa INT
+);
+
+CREATE TABLE residencia (
+    numero_casa INT PRIMARY KEY NOT NULL,
+    rua VARCHAR(100) NOT NULL,
+    cep VARCHAR(20) NOT NULL,
+    dono_id INT,
+    FOREIGN KEY (dono_id) REFERENCES morador(id)
+);
+
+ALTER TABLE morador ADD FOREIGN KEY (moraNa) REFERENCES residencia(numero_casa);
+
+INSERT INTO residencia (numero_casa, rua, cep)
+VALUES 
+('101', 'Rua das Flores', '12345-678'),
+('202', 'Avenida Central', '98765-432'),
+('303', 'Travessa da Paz', '11111-222'),
+('404', 'Rua dos Limoeiros', '33333-444');
+
+INSERT INTO morador (nome, rg, cpf, moraNa) VALUES 
+('Ana Silva', "123", "123", 101),       
+('Carlos Souza', "321", "321", 101);
+
+INSERT INTO morador (nome, rg, cpf, moraNa) VALUES
+('Roberto Andrade', "999", "999", 202);
+
+INSERT INTO morador (nome, rg, cpf, moraNa) VALUES 
+('Mariana Lima', '456', '456',  303);
+
+INSERT INTO morador (nome, rg, cpf, moraNa) VALUES 
+('Pedro Almeida', '654', '654', 303),
+('Lucas Pereira', '789', '789', 303);
+
+INSERT INTO morador (nome, rg, cpf, moraNa) VALUES 
+('Fernanda Costa', '987', '987', 404);
+
+UPDATE residencia SET dono_id = 1 WHERE numero_casa = 101;
+UPDATE residencia SET dono_id = 3 WHERE numero_casa = 202;
+UPDATE residencia SET dono_id = 4 WHERE numero_casa = 303;
+UPDATE residencia SET dono_id = 7 WHERE numero_casa = 404;
+
+CREATE TABLE pagamento (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    residencia_id INT NOT NULL,
+    mes VARCHAR(20) NOT NULL, -- Ex: 'Janeiro', 'Fevereiro'... ou pode ser '2024-01'
+    ano INT NOT NULL,
+    pago BOOLEAN DEFAULT FALSE,
+    data_pagamento DATE,
+
+	FOREIGN KEY (residencia_id) REFERENCES residencia(numero_casa) 
+);
+
+INSERT INTO pagamento (residencia_id, mes, ano, pago, data_pagamento) VALUES
+(101, 'Janeiro', 2024, TRUE, '2024-01-05'),
+(101, 'Fevereiro', 2024, TRUE, '2024-02-03'),
+(101, 'Março', 2024, FALSE, NULL);
+
+INSERT INTO pagamento (residencia_id, mes, ano, pago, data_pagamento) VALUES
+(202, 'Janeiro', 2024, TRUE, '2024-01-02'),
+(202, 'Fevereiro', 2024, TRUE, '2024-02-04'),
+(202, 'Março', 2024, TRUE, '2024-03-05');
+
+INSERT INTO pagamento (residencia_id, mes, ano, pago, data_pagamento) VALUES
+(303, 'Janeiro', 2024, TRUE, '2024-01-08'),
+(303, 'Fevereiro', 2024, FALSE, NULL),
+(303, 'Março', 2024, FALSE, NULL);
+
+INSERT INTO pagamento (residencia_id, mes, ano, pago, data_pagamento) VALUES
+(404, 'Janeiro', 2024, TRUE, '2024-01-03'),
+(404, 'Fevereiro', 2024, TRUE, '2024-02-02'),
+(404, 'Março', 2024, TRUE, '2024-03-04');
